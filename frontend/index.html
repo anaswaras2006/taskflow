@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TaskFlow — Organize your day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="landing">
+
+<header class="landing-nav">
+    <div class="wordmark"><span class="dot"></span>TaskFlow</div>
+    <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <a href="login.html" class="nav-cta" style="text-decoration:none; display:inline-block;">Log in</a>
+        <button class="nav-cta" style="background:var(--accent); color:#1a1200; border-color:var(--accent);" onclick="goSignup()">Sign up</button>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <div class="eyebrow">Personal task manager</div>
+        <h1>Plan the day,<br><span class="mark">finish what matters</span>.</h1>
+        <p class="lead">
+            One calm place for tasks, folders and reminders — no clutter, just clarity.
+        </p>
+        <div class="hero-actions">
+            <button class="btn-primary" onclick="goSignup()">Get started →</button>
+        </div>
+        <div class="hero-stats">
+            <div><strong>10s</strong><span>To sign up</span></div>
+            <div><strong>100%</strong><span>Your data, your account</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card feat-1">
+        <div class="icon">⚡</div>
+        <h3>Focus tasks</h3>
+        <p>Due dates, priorities, and a filter for what's left to do.</p>
+    </div>
+    <div class="feature-card feat-2">
+        <div class="icon">⏰</div>
+        <h3>Smart reminders</h3>
+        <p>Everything due today and tomorrow, in one place.</p>
+    </div>
+    <div class="feature-card feat-3">
+        <div class="icon">📁</div>
+        <h3>Folders that fit</h3>
+        <p>Group tasks by project, class, or client.</p>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+    <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2>Three steps, no complicated screens</h2>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-img"><img src="images/img1.jpg" alt="Writing down a task"></div>
+            <div class="step-body">
+                <div class="step-num">Step 01</div>
+                <h3>Add a task</h3>
+                <p>Name it, set a due date and priority.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-img"><img src="images/img2.jpg" alt="Organizing tasks into folders"></div>
+            <div class="step-body">
+                <div class="step-num">Step 02</div>
+                <h3>Sort it</h3>
+                <p>Drop it in a folder, or leave it loose.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-img"><img src="images/img3.jpg" alt="Checking off a completed task"></div>
+            <div class="step-body">
+                <div class="step-num">Step 03</div>
+                <h3>Check it off</h3>
+                <p>Reminders keep today and tomorrow in view.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CLOSING BANNER / CTA -->
+<section class="banner-section">
+    <img src="images/img3.jpg" alt="Calm, focused workspace">
+    <div class="banner-content">
+        <h2>Today's list is one click away.</h2>
+        <p>Sign up in seconds — then your list is one click away.</p>
+    </div>
+</section>
+
+<!-- FAQ (collapsible — collapsed by default) -->
+<section class="faq" id="faq">
+    <div class="section-head">
+        <div class="eyebrow">Good to know</div>
+        <h2>A few common questions</h2>
+    </div>
+
+    <details class="faq-item">
+        <summary>Do I need to create an account?</summary>
+        <p>Yes — a quick sign-up (just a username and password) keeps your tasks private to you.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Where is my data stored?</summary>
+        <p>Securely in a database, tied to your account — so it's there whenever you log back in, on any device.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Can I use folders for different projects?</summary>
+        <p>Yes — create as many as you like from the sidebar.</p>
+    </details>
+    <details class="faq-item">
+        <summary>Will I lose my tasks if I clear browser data?</summary>
+        <p>No — your tasks live in your account, not your browser. Just log back in and they'll be there.</p>
+    </details>
+</section>
+
+<footer class="landing-footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="wordmark"><span class="dot"></span>TaskFlow</div>
+            <p>A calm, local-first task manager.</p>
+        </div>
+
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h4>Product</h4>
+                <a href="#home">Home</a>
+                <a href="#how">How it works</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span>TaskFlow</span>
+        <span>Built to keep today manageable.</span>
+    </div>
+</footer>
+
+<script>
+function goSignup(){
+    window.location.href = "signup.html";
+}
+</script>
+
+</body>
+</html>

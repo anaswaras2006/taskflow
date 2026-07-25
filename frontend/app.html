@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="wordmark"><span class="dot"></span>TaskFlow</div>
+
+        <div class="nav-label">Views</div>
+        <nav>
+            <button id="btn-home" onclick="showTab('home')">🏠 Home</button>
+            <button id="btn-reminders" onclick="showTab('reminders')">⏰ Reminders</button>
+            <button id="btn-tasks" onclick="showTab('tasks')">📋 Tasks</button>
+            <button id="btn-folders" onclick="showTab('folders')">📁 Folders</button>
+        </nav>
+
+        <div class="nav-label">Actions</div>
+        <nav>
+            <button id="btn-add" onclick="showTab('add')">➕ Add task</button>
+            <button id="btn-folder" onclick="showTab('folder')">📂 New folder</button>
+        </nav>
+
+        <div class="sidebar-footer">
+            Logged in as <strong id="welcomeUsername">...</strong><br>
+            <button onclick="logout()" style="margin-top:8px; width:100%; padding:8px; border-radius:8px; border:1px solid var(--border-strong); background:transparent; color:var(--text-muted); cursor:pointer; font-size:12.5px;">Log out</button>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- HOME -->
+        <div id="homeTab">
+
+            <div class="card greeting-card">
+                <h1>Welcome back 👋</h1>
+                <p>Here's where things stand today.</p>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-tile accent">
+                    <div class="num" id="statPending">0</div>
+                    <div class="label">Pending tasks</div>
+                </div>
+                <div class="stat-tile low">
+                    <div class="num" id="statDone">0</div>
+                    <div class="label">Completed</div>
+                </div>
+                <div class="stat-tile high">
+                    <div class="num" id="statDueToday">0</div>
+                    <div class="label">Due today</div>
+                </div>
+            </div>
+
+            <div class="card quote-card">
+                <div class="eyebrow">Today's mindset</div>
+                <p>"Small daily improvements lead to massive long-term results."</p>
+            </div>
+        </div>
+
+        <!-- REMINDERS -->
+        <div id="remindersTab" style="display:none;">
+            <div class="page-header">
+                <div>
+                    <h2>⏰ Smart Reminders</h2>
+                    <div class="sub">What's due today and tomorrow.</div>
+                </div>
+            </div>
+            <div class="card">
+                <div id="reminderContainer"></div>
+            </div>
+        </div>
+
+        <!-- TASKS -->
+        <div id="tasksTab" style="display:none;">
+            <div class="page-header">
+                <div>
+                    <h2>📋 Tasks</h2>
+                    <div class="sub">Everything you're working on.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="filter-row">
+                    <button id="filter-all" onclick="showTaskView('all')">All</button>
+                    <button id="filter-uncompleted" onclick="showTaskView('uncompleted')">Pending</button>
+                    <button id="filter-completed" onclick="showTaskView('completed')">Done</button>
+                </div>
+                <div id="taskContainer"></div>
+            </div>
+        </div>
+
+        <!-- FOLDERS -->
+        <div id="foldersTab" style="display:none;">
+            <div class="page-header">
+                <div>
+                    <h2>📁 Folders</h2>
+                    <div class="sub">Tasks grouped by project or context.</div>
+                </div>
+            </div>
+            <div id="folderContainer"></div>
+        </div>
+
+        <!-- ADD TASK -->
+        <div id="addTab" style="display:none;">
+            <div class="page-header">
+                <div>
+                    <h2>➕ Add task</h2>
+                    <div class="sub">Give it a name, a due date, and a priority.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="taskInput">Task</label>
+                        <input id="taskInput" placeholder="e.g. Finish quarterly report">
+                    </div>
+                    <div class="field">
+                        <label for="dueDate">Due date</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                    <div class="field">
+                        <label for="priority">Priority</label>
+                        <select id="priority">
+                            <option value="High">High priority</option>
+                            <option value="Low">Low priority</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="folderSelect">Folder</label>
+                        <select id="folderSelect">
+                            <option value="">No folder</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-solid" onclick="addTask()">Add task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CREATE FOLDER -->
+        <div id="folderTab" style="display:none;">
+            <div class="page-header">
+                <div>
+                    <h2>📂 Create folder</h2>
+                    <div class="sub">Group related tasks together.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="folderInput">Folder name</label>
+                        <input id="folderInput" placeholder="e.g. Client work">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-solid" onclick="createFolder()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow — Log in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+    .auth-wrap{
+        max-width:380px;
+        margin:80px auto;
+        padding:0 24px;
+    }
+    .auth-card{
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:var(--radius-lg);
+        padding:32px;
+        box-shadow:var(--shadow-card);
+    }
+    .auth-card h1{
+        font-family:var(--font-display);
+        font-size:24px;
+        margin:0 0 6px;
+    }
+    .auth-card p.sub{ color:var(--text-muted); font-size:13.5px; margin:0 0 24px; }
+    .auth-error{
+        background:var(--high-soft);
+        color:var(--high);
+        border-radius:8px;
+        padding:10px 14px;
+        font-size:13px;
+        margin-bottom:16px;
+        display:none;
+    }
+    .auth-switch{
+        text-align:center;
+        margin-top:18px;
+        font-size:13.5px;
+        color:var(--text-muted);
+    }
+    .auth-switch a{ color:var(--accent-strong); text-decoration:none; font-weight:600; }
+
+    /* hide the browser's own built-in eye icon so only our custom
+       Show/Hide button appears (Edge adds one automatically) */
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear{ display:none; }
+    input::-webkit-credentials-auto-fill-button{ visibility:hidden; }
+</style>
+</head>
+<body class="landing">
+
+<div class="auth-wrap">
+    <div class="wordmark" style="justify-content:center; margin-bottom:28px;">
+        <span class="dot"></span>TaskFlow
+    </div>
+
+    <div class="auth-card">
+        <h1>Welcome back</h1>
+        <p class="sub">Log in to see your tasks.</p>
+
+        <div class="auth-error" id="errorBox"></div>
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="username">Username</label>
+                <input id="username">
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <div style="position:relative;">
+                    <input id="password" type="password" style="padding-right:60px;">
+                    <button type="button" onclick="togglePassword()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-muted); font-size:12px; font-weight:600; cursor:pointer;">Show</button>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn-solid" style="width:100%;" onclick="login()">Log in</button>
+            </div>
+        </div>
+
+        <div class="auth-switch">
+            Don't have an account? <a href="signup.html">Sign up</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(){
+    const field = document.getElementById("password");
+    const btn = event.target;
+    if(field.type === "password"){
+        field.type = "text";
+        btn.textContent = "Hide";
+    } else {
+        field.type = "password";
+        btn.textContent = "Show";
+    }
+}
+
+async function login(){
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const errorBox = document.getElementById("errorBox");
+    errorBox.style.display = "none";
+
+    if(!username || !password){
+        errorBox.textContent = "Please fill in both fields.";
+        errorBox.style.display = "block";
+        return;
+    }
+
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if(res.ok){
+        window.location.href = "app.html";
+    } else {
+        errorBox.textContent = data.error || "Something went wrong.";
+        errorBox.style.display = "block";
+    }
+}
+
+// allow pressing Enter to submit
+document.addEventListener("keydown", e => {
+    if(e.key === "Enter") login();
+});
+</script>
+
+</body>
+</html>
